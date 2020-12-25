@@ -1,0 +1,11 @@
+name: springboot
+version: dev
+author: Tencent Cloud, Inc.
+org: Tencent Cloud, Inc.
+description: Deploy a serverless Java SpringBoot application on Tencent SCF and API Gateway.
+keywords: tencent, serverless, java, springboot
+repo: https://github.com/serverless-components/tencent-springboot
+readme: https://github.com/serverless-components/tencent-springboot/tree/master/README.md
+license: MIT
+main: ./src
+webDeployable: true

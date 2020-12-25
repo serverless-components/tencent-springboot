@@ -1,0 +1,21 @@
+org: orgDemo
+app: springbootDemo
+stage: dev
+component: springboot
+name: springbootDemo
+
+inputs:
+  region: ap-guangzhou
+  src: ./
+  # src:
+  #   bucket: bucket01
+  #   object: code.jar
+  projectJarName: 'my-springboot.jar'
+  functionConfig:
+    handler: 'example.MyHandler::mainHandler'
+    timeout: 30
+    memorySize: 256
+  apigatewayConf:
+    protocols:
+      - http
+      - https
