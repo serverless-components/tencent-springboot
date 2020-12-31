@@ -1,7 +1,5 @@
 [![Serverless Components](https://main.qcloudimg.com/raw/ee412a92d931554cea5f626838c5170f.png)](http://serverless.com)
 
-# Tencent Serverless Component - SpringBoot
-
 </br>
 
 **腾讯云 SpringBoot 组件** ⎯⎯⎯ 通过使用 [Tencent Serverless Framework](https://github.com/serverless/components/tree/cloud)，基于云上 Serverless 服务（如网关、云函数等），实现“0”配置，便捷开发，极速部署你的 SpringBoot 应用，SpringBoot 组件支持丰富的配置扩展，提供了目前最易用、低成本并且弹性伸缩的 SpringBoot 项目开发/托管能力。
@@ -138,7 +136,7 @@ public class MyHandler extends AbstractSpringHandler {
 }
 ```
 
-3. 将代码用 Maven 创建 `jar` 部署包或者用 Gradle 创建 zip 部署包，需要把应用所需的依赖一起打包。
+3. 将代码用 Maven 创建 `jar` 部署包或者用 Gradle 创建 zip 部署包。
 
 - 云函数关于 Maven 部署包的说明：[点此查看](https://cloud.tencent.com/document/product/583/12217)
 - 云函数关于 Gradle 部署包的说明：[点此查看](https://cloud.tencent.com/document/product/583/12216)
