@@ -1,3 +1,5 @@
+[![Serverless Components](https://main.qcloudimg.com/raw/ee412a92d931554cea5f626838c5170f.png)](http://serverless.com)
+
 # Tencent Serverless Component - SpringBoot
 
 </br>
@@ -81,7 +83,7 @@ app: appDemo # (optional) serverless dashboard app. default is the same as the n
 stage: dev # (optional) serverless dashboard stage. default is dev.
 
 inputs:
-  src: ./ # (optional) path to the source folder. default is a hello world app.
+  src: ./ # path to the source folder. default is a hello world app.
   functionName: springbootDemo
   region: ap-guangzhou
   runtime: Java8 # (optional) only Java8 is currently available
@@ -103,13 +105,19 @@ inputs:
 
 **若使用自己的 SpringBoot 项目代码进行部署需要进行如下的改造**
 
-1. 在项目 `pom.xml` 中新增腾讯云函数的依赖。
+1. 在项目 `pom.xml` 中新增腾讯云函数（需为0.0.3版本）和fastjson的依赖（若自身项目有所用版本可不修改，若无则请依赖最新版本）。
 
 ```
 <dependency>
     <groupId>com.tencentcloudapi</groupId>
     <artifactId>scf-java-events</artifactId>
     <version>0.0.3</version>
+</dependency>
+
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.2.73</version>
 </dependency>
 ```
 

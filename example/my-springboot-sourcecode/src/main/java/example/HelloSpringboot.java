@@ -1,7 +1,6 @@
 package example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +15,10 @@ public class HelloSpringboot {
     }
 
     @RequestMapping("/test")
-    public String jsonRes() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Person person = new Person("test admin");
-        return mapper.writeValueAsString(person);
+    public JSONObject jsonRes() {
+        JSONObject info = new JSONObject();
+        info.put("message", "test springboot");
+        return info;
     }
 
     @RequestMapping("/hello")

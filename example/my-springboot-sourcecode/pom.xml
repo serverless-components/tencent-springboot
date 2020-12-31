@@ -12,17 +12,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>qcloud-java-sdk</artifactId>
             <version>2.0.1</version>
         </dependency>
- 
+
         <dependency>
             <groupId>com.tencentcloudapi</groupId>
             <artifactId>scf-java-events</artifactId>
             <version>0.0.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/scf-java-events-0.0.3.jar</systemPath>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
@@ -65,44 +69,6 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
-                </configuration>
-            </plugin>
-<!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/lib
-                            </outputDirectory>
-                            <includeScope>system</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <!-- 依赖包的前缀就是jar包所在的文件夹 -->
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                        <manifestEntries>
-                            <!-- 这个插件并不会把scope为system的依赖添加到Class-Path，所以须要手动指定，必须一个一个写，多个时用空格隔开 -->
-                            <Class-Path>lib/scf-java-events-0.0.3.jar</Class-Path>
-                        </manifestEntries>
-                    </archive>
                 </configuration>
             </plugin>
 
