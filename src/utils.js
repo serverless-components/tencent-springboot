@@ -149,9 +149,6 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
           ]
         })
       } catch (error) {
-        if (error && (error.displayMsg || error.message)) {
-          console.log(error.displayMsg || error.message)
-        }
         throw new TypeError('UPLOAD_CODE', `Create cos bucket ${bucketName + '-' + appId} failed.`)
       }
     }
@@ -165,7 +162,8 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
       zipEntries.forEach(function(zipEntry) {
         if (zipEntry.isDirectory == false) {
           console.log('target upload folder file name:' + zipEntry.entryName)
-          if (zipEntry.entryName === inputs.projectJarName) {
+          const fileNames = zipEntry.entryName && zipEntry.entryName.split('/')
+          if (fileNames.length > 0 && fileNames[fileNames.length - 1] === inputs.projectJarName) {
             zip.extractEntryTo(zipEntry.entryName, '/tmp/target', false, true)
           }
         }
@@ -177,9 +175,6 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
           file: `/tmp/target/${inputs.projectJarName}`
         })
       } catch (error) {
-        if (error && (error.displayMsg || error.message)) {
-          console.log(error.displayMsg || error.message)
-        }
         throw new TypeError('UPLOAD_CODE', 'Upload code to user cos failed.')
       }
 

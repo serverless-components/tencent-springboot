@@ -1,5 +1,5 @@
 name: springboot
-version: 0.0.1
+version: 0.0.2
 author: Tencent Cloud, Inc.
 org: Tencent Cloud, Inc.
 description: Deploy a serverless Java SpringBoot application on Tencent SCF and API Gateway.
