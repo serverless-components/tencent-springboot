@@ -133,20 +133,24 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
     const cos = new Cos(credentials, region)
 
     if (!inputs.code.bucket) {
-      // create default bucket
-      await cos.deploy({
-        bucket: bucketName + '-' + appId,
-        force: true,
-        lifecycle: [
-          {
-            status: 'Enabled',
-            id: 'deleteObject',
-            filter: '',
-            expiration: { days: '10' },
-            abortIncompleteMultipartUpload: { daysAfterInitiation: '10' }
-          }
-        ]
-      })
+      try {
+        // create default bucket
+        await cos.deploy({
+          bucket: bucketName + '-' + appId,
+          force: true,
+          lifecycle: [
+            {
+              status: 'Enabled',
+              id: 'deleteObject',
+              filter: '',
+              expiration: { days: '10' },
+              abortIncompleteMultipartUpload: { daysAfterInitiation: '10' }
+            }
+          ]
+        })
+      } catch (error) {
+        throw new TypeError('UPLOAD_CODE', `Create cos bucket ${bucketName + '-' + appId} failed.`)
+      }
     }
 
     // upload code to cos
@@ -158,16 +162,21 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
       zipEntries.forEach(function(zipEntry) {
         if (zipEntry.isDirectory == false) {
           console.log('target upload folder file name:' + zipEntry.entryName)
-          if (zipEntry.entryName === inputs.projectJarName) {
+          const fileNames = zipEntry.entryName && zipEntry.entryName.split('/')
+          if (fileNames.length > 0 && fileNames[fileNames.length - 1] === inputs.projectJarName) {
             zip.extractEntryTo(zipEntry.entryName, '/tmp/target', false, true)
           }
         }
       })
 
-      await cos.upload({
-        bucket: bucketName + '-' + appId,
-        file: `/tmp/target/${inputs.projectJarName}`
-      })
+      try {
+        await cos.upload({
+          bucket: bucketName + '-' + appId,
+          file: `/tmp/target/${inputs.projectJarName}`
+        })
+      } catch (error) {
+        throw new TypeError('UPLOAD_CODE', 'Upload code to user cos failed.')
+      }
 
       // remove all files under the /tmp/target folder
       deleteTmpFolder('/tmp/target')
