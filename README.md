@@ -103,7 +103,7 @@ inputs:
 
 **若使用自己的 SpringBoot 项目代码进行部署需要进行如下的改造**
 
-1. 在项目 `pom.xml` 中新增腾讯云函数（需为0.0.3版本）和fastjson的依赖（若自身项目有所用版本可不修改，若无则请依赖最新版本）。
+1. 在项目 `pom.xml` 中新增腾讯云函数（需为 0.0.3 版本）和 fastjson 的依赖（若自身项目有所用版本可不修改，若无则请依赖最新版本）。
 
 ```
 <dependency>
@@ -137,6 +137,27 @@ public class MyHandler extends AbstractSpringHandler {
 ```
 
 3. 将代码用 Maven 创建 `jar` 部署包或者用 Gradle 创建 zip 部署包。
+
+需要将项目所有的依赖包一起打包，例如使用`Maven`则推荐用`maven-shade-plugin`进行打包，修改`pom.xml`中的`plugin`：
+
+```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.1.1</version>
+    <configuration>
+        <createDependencyReducedPom>false</createDependencyReducedPom>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
 
 - 云函数关于 Maven 部署包的说明：[点此查看](https://cloud.tencent.com/document/product/583/12217)
 - 云函数关于 Gradle 部署包的说明：[点此查看](https://cloud.tencent.com/document/product/583/12216)
