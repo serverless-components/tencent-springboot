@@ -1,4 +1,3 @@
-const path = require('path')
 const { Cos } = require('tencent-component-toolkit')
 const ensureObject = require('type/object/ensure')
 const ensureIterable = require('type/iterable/ensure')
@@ -102,11 +101,11 @@ const deleteTmpFolder = (path) => {
   let files = []
   if (fs.existsSync(path)) {
     files = fs.readdirSync(path)
-    files.forEach(function(file, index) {
+    files.forEach(function(file) {
       const curPath = path + '/' + file
       if (fs.statSync(curPath).isDirectory()) {
         // recurse
-        deleteall(curPath)
+        deleteTmpFolder(curPath)
       } else {
         // delete file
         fs.unlinkSync(curPath)
@@ -149,7 +148,10 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
           ]
         })
       } catch (error) {
-        throw new ApiTypeError('UPLOAD_CODE', `Create cos bucket ${bucketName + '-' + appId} failed.`)
+        throw new ApiTypeError(
+          'UPLOAD_CODE',
+          `Create cos bucket ${bucketName + '-' + appId} failed.`
+        )
       }
     }
 
