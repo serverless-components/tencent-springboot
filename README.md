@@ -150,7 +150,7 @@ public class MyHandler extends AbstractSpringHandler {
 
 需要将项目所有的依赖包一起打包，例如使用`Maven`则推荐用`maven-shade-plugin`进行打包，修改`pom.xml`中的`plugin`：
 
-> 若复杂项目下该配置打包无效，请参考完整版配置(注释部分)。[样例代码](https://github.com/serverless-components/tencent-springboot/blob/main/example/my-springboot-sourcecode/pom.xml#L50)
+> 若复杂项目下该配置打包无效，请参考完整版配置(注释部分)。[样例代码](https://github.com/serverless-components/tencent-springboot/blob/master/example/my-springboot-sourcecode/pom.xml#L68)
 
 ```
 <plugin>
