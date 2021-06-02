@@ -4,7 +4,7 @@ const ensureObject = require('type/object/ensure')
 const ensureIterable = require('type/iterable/ensure')
 const ensureString = require('type/string/ensure')
 const download = require('download')
-const { TypeError } = require('tencent-component-toolkit/src/utils/error')
+const { ApiTypeError } = require('tencent-component-toolkit/lib/utils/error')
 const CONFIGS = require('./config')
 const fs = require('fs')
 const AdmZip = require('adm-zip')
@@ -58,13 +58,13 @@ const getDefaultServiceDescription = () => {
 
 const validateTraffic = (num) => {
   if (getType(num) !== 'Number') {
-    throw new TypeError(
+    throw new ApiTypeError(
       `PARAMETER_${CONFIGS.compName.toUpperCase()}_TRAFFIC`,
       'traffic must be a number'
     )
   }
   if (num < 0 || num > 1) {
-    throw new TypeError(
+    throw new ApiTypeError(
       `PARAMETER_${CONFIGS.compName.toUpperCase()}_TRAFFIC`,
       'traffic must be a number between 0 and 1'
     )
@@ -88,7 +88,7 @@ const getCodeZipPath = async (inputs) => {
         filename: `${filename}.zip`
       })
     } catch (e) {
-      throw new TypeError(`DOWNLOAD_TEMPLATE`, 'Download default template failed.')
+      throw new ApiTypeError(`DOWNLOAD_TEMPLATE`, 'Download default template failed.')
     }
     zipPath = `${downloadPath}/${filename}.zip`
   } else {
@@ -149,7 +149,7 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
           ]
         })
       } catch (error) {
-        throw new TypeError('UPLOAD_CODE', `Create cos bucket ${bucketName + '-' + appId} failed.`)
+        throw new ApiTypeError('UPLOAD_CODE', `Create cos bucket ${bucketName + '-' + appId} failed.`)
       }
     }
 
@@ -175,7 +175,7 @@ const uploadCodeToCos = async (instance, appId, credentials, inputs, region) => 
           file: `/tmp/target/${inputs.projectJarName}`
         })
       } catch (error) {
-        throw new TypeError('UPLOAD_CODE', 'Upload code to user cos failed.')
+        throw new ApiTypeError('UPLOAD_CODE', 'Upload code to user cos failed.')
       }
 
       // remove all files under the /tmp/target folder

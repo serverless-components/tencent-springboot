@@ -103,13 +103,13 @@ inputs:
 
 **若使用自己的 SpringBoot 项目代码进行部署需要进行如下的改造**
 
-1. 在项目 `pom.xml` 中新增腾讯云函数（需为 0.0.3 版本）和 fastjson 的依赖（若自身项目有所用版本可不修改，若无则请依赖最新版本）。
+1. 在项目 `pom.xml` 中新增腾讯云函数（需为 0.0.4 版本）和 fastjson 的依赖（若自身项目有所用版本可不修改，若无则请依赖最新版本）。
 
 ```
 <dependency>
     <groupId>com.tencentcloudapi</groupId>
     <artifactId>scf-java-events</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
 </dependency>
 
 <dependency>
@@ -119,7 +119,8 @@ inputs:
 </dependency>
 ```
 
-2. 在项目的根目录的 `src/main/java` 的任意目录下新增一个执行方法入口，例如：在 src/main/java/example 目录下新建 MyHandler.java
+2. 在项目的根目录的 `src/main/java` 的任意目录下新增一个执行方法入口，例如：在 src/main/java/example 目录下新建 MyHandler.java 文件。
+   如果需要自定义响应数据转换成 Base64 的指定 MediaType 请复写 `getBinaryTypes` 方法并返回 MediaType 列表。
 
 ```java
 package example;
@@ -127,6 +128,15 @@ package example;
 import com.qcloud.scf.runtime.AbstractSpringHandler;
 
 public class MyHandler extends AbstractSpringHandler {
+
+    /*
+       自定义需要转换成Base64的MediaType列表，默认为MediaType.ALL
+    */
+//    @Override
+//    public List<MediaType> getBinaryTypes() {
+//        return Arrays.asList(MediaType.IMAGE_PNG, MediaType.IMAGE_JPEG);
+//    }
+
     @Override
     public void startApp() {
         System.out.println("start app");
@@ -139,6 +149,8 @@ public class MyHandler extends AbstractSpringHandler {
 3. 将代码用 Maven 创建 `jar` 部署包或者用 Gradle 创建 zip 部署包。
 
 需要将项目所有的依赖包一起打包，例如使用`Maven`则推荐用`maven-shade-plugin`进行打包，修改`pom.xml`中的`plugin`：
+
+> 若复杂项目下该配置打包无效，请参考完整版配置(注释部分)。[样例代码](https://github.com/serverless-components/tencent-springboot/blob/main/example/my-springboot-sourcecode/pom.xml#L50)
 
 ```
 <plugin>
